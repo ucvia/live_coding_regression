@@ -78,4 +78,26 @@ class Lasso:
             Lasso.solve()
 
         return self.w_lasso.value
+    
+    def path(self, values, progress, _lambda=None, _s=None):
+        # w_values, train_mse_values_lag, test_mse_values_lag = [], [], []
+        w_values = []
+        
+        if _lambda is None and _s is None:
+            return "error"
+
+        n_values = len(values)
+
+        for i, v in enumerate(values):
+            if _s is not None:
+                w_values.append(self.resolver(_s=v))
+            if _lambda is not None:
+                w_values.append(self.resolver(_lambda=v))
+            
+            progress.progress((1.0 * i)/n_values )
+
+            # train_mse_values_lag.append(mse(X=X_train, y=y_train, beta=w_lasso_lag.value))
+            # test_mse_values_lag.append(mse(X=X_test, y=y_test, beta=w_lasso_lag.value)) 
+
+        return w_values
    
