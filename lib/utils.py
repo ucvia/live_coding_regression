@@ -28,3 +28,21 @@ def plot_coefficients(df, w=20, h=10):
     plt.legend()
     # plt.show()
     return plt
+
+def plot_regularization_path(lambd_values, beta_values, true_features, legend="\lambda", title="Regularization Path"):
+    """Method to plot the regularization path given lambda values and beta values
+    Args:
+        lambd_values (numpy.ndarray): An array of lambda values
+        beta_values (numpy.ndarray): A matrix of size (n, lambdas) with n the number of lambdas.
+        legend (str): The x-axis label of interest (Defaults to lambda).
+        title (str): The plot title name (Defaults to Regularization Path)
+    """
+    num_coeffs = len(beta_values[0])
+    plt.figure(figsize=(10,10))
+    for i in range(num_coeffs):
+        plt.plot(lambd_values, [wi[i] for wi in beta_values], linewidth=3 if i in true_features else 1)
+    plt.xlabel(r"${}$".format(legend), fontsize=16)
+    plt.xscale("log")
+    plt.title("{}".format(title), fontsize=20)
+    # plt.show()
+    return plt
